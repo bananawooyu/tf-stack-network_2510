@@ -27,6 +27,7 @@ variable "secret_key" {
   description = "AWS Secret Access Key for authentication."
   type        = string
   ephemeral   = true
+  sensitive   = true
 }
 
 variable "default_tags" {
