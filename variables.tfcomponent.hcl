@@ -18,13 +18,15 @@ variable "regions" {
 # }
 
 variable "access_key" {
-  description = "ARN of role associated with identity token."
+  description = "AWS Access Key ID for authentication."
   type        = string
+  ephemeral   = true
 }
 
 variable "secret_key" {
-  description = "ARN of role associated with identity token."
+  description = "AWS Secret Access Key for authentication."
   type        = string
+  ephemeral   = true
 }
 
 variable "default_tags" {
