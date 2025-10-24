@@ -13,13 +13,13 @@ provider "aws" "this" {
 
   config {
     region = each.value
-    # access_key = var.access_key
-    # secret_key = var.secret_key
+    access_key = var.access_key
+    secret_key = var.secret_key
 
-    assume_role_with_web_identity {
-      role_arn           = var.role_arn
-      web_identity_token = var.identity_token
-    }
+    # assume_role_with_web_identity {
+    #   role_arn           = var.role_arn
+    #   web_identity_token = var.identity_token
+    # }
 
     default_tags {
       tags = var.default_tags
