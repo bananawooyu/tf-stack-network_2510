@@ -17,6 +17,7 @@ deployment "development" {
     # identity_token = identity_token.aws.jwt
     access_key = store.varset.aws_creds.AWS_ACCESS_KEY_ID
     secret_key = store.varset.aws_creds.AWS_SECRET_ACCESS_KEY
+
     default_tags = {
       Stack       = "tf-stack-network_2510",
       Environment = "dev"
