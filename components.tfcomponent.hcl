@@ -21,6 +21,23 @@ component "key_pair" {
   }
 }
 
+# Remove old for_each instances
+removed {
+  from = component.vpc["ap-northeast-1"]
+
+  lifecycle {
+    destroy = true
+  }
+}
+
+removed {
+  from = component.key_pair["ap-northeast-1"]
+
+  lifecycle {
+    destroy = true
+  }
+}
+
 
 output "vpc_id" {
   type        = string
