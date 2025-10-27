@@ -22,3 +22,28 @@ component "key_pair" {
     aws = provider.aws.this[each.value]
   }
 }
+
+
+output "vpc_ids" {
+  type        = map(string)
+  description = "VPC IDs by region"
+  value       = component.vpc.vpc_id
+}
+
+output "private_subnet_ids" {
+  type        = map(list(string))
+  description = "Private subnet IDs by region"
+  value       = component.vpc.private_subnet_ids
+}
+
+output "security_group_ids" {
+  type        = map(list(string))
+  description = "Security group IDs by region"
+  value       = component.vpc.security_group_ids
+}
+
+output "key_names" {
+  type        = map(string)
+  description = "Key pair names by region"
+  value       = component.key_pair.key_name
+}
