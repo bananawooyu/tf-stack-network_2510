@@ -23,6 +23,26 @@ deployment "development" {
   }
 }
 
+publish_output "vpc_ids" {
+  description = "VPC IDs by region"
+  value       = { for region, vpc in deployment.development.vpc : region => vpc.vpc_id }
+}
+
+publish_output "private_subnet_ids" {
+  description = "Private subnet IDs by region"
+  value       = { for region, vpc in deployment.development.vpc : region => vpc.private_subnet_ids }
+}
+
+publish_output "security_group_ids" {
+  description = "Security group IDs by region"
+  value       = { for region, vpc in deployment.development.vpc : region => vpc.security_group_ids }
+}
+
+publish_output "key_names" {
+  description = "Key pair names by region"
+  value       = deployment.development.key_names
+}
+
 # deployment "production" {
 #   inputs = {
 #     regions = ["ap-northeast-1"]
