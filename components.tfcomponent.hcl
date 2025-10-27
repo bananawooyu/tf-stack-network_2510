@@ -23,19 +23,13 @@ component "key_pair" {
 
 # Remove old for_each instances
 removed {
-  from = component.vpc["ap-northeast-1"]
-
-  lifecycle {
-    destroy = true
-  }
+  source = "./vpc"
+  from   = component.vpc["ap-northeast-1"]
 }
 
 removed {
-  from = component.key_pair["ap-northeast-1"]
-
-  lifecycle {
-    destroy = true
-  }
+  source = "./key_pair"
+  from   = component.key_pair["ap-northeast-1"]
 }
 
 
