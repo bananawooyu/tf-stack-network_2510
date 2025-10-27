@@ -16,7 +16,6 @@ component "vpc" {
 
 component "key_pair" {
   source   = "./key_pair"
-  for_each = var.regions
 
   providers = {
     aws = provider.aws.this[each.value]
@@ -27,19 +26,19 @@ component "key_pair" {
 output "vpc_ids" {
   type        = map(string)
   description = "VPC IDs by region"
-  value       = component.vpc.vpc_id
+  value       = { for region, vpc in component.vpc : region => vpc.vpc_id }
 }
 
 output "private_subnet_ids" {
   type        = map(list(string))
   description = "Private subnet IDs by region"
-  value       = component.vpc.private_subnet_ids
+  value       = { for region, vpc in component.vpc : region => vpc.private_subnet_ids }
 }
 
 output "security_group_ids" {
   type        = map(list(string))
   description = "Security group IDs by region"
-  value       = component.vpc.security_group_ids
+  value       = { for region, vpc in component.vpc : region => [vpc.security_group_id_ssh] }
 }
 
 output "key_names" {
