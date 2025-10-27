@@ -21,46 +21,40 @@ component "key_pair" {
   }
 }
 
-# Remove old for_each instances
-removed {
-  source = "./vpc"
-  from   = component.vpc["ap-northeast-1"]
+# # Remove old for_each instances
+# removed {
+#   source = "./vpc"
+#   from   = component.vpc["ap-northeast-1"]
   
-  providers = {
-    aws = provider.aws.this
-  }
-}
+#   providers = {
+#     aws = provider.aws.this
+#   }
+# }
 
-removed {
-  source = "./key_pair"
-  from   = component.key_pair["ap-northeast-1"]
+# removed {
+#   source = "./key_pair"
+#   from   = component.key_pair["ap-northeast-1"]
   
-  providers = {
-    aws = provider.aws.this
-  }
-}
+#   providers = {
+#     aws = provider.aws.this
+#   }
+# }
 
 
-output "vpc_id" {
-  type        = string
-  description = "VPC ID"
-  value       = component.vpc.vpc_id
-}
-
-output "private_subnet_ids" {
-  type        = list(string)
-  description = "Private subnet IDs"
-  value       = component.vpc.private_subnet_ids
-}
-
-output "security_group_ids" {
-  type        = list(string)
-  description = "Security group IDs"
-  value       = [component.vpc.security_group_id_ssh]
-}
-
-output "key_name" {
-  type        = string
-  description = "Key pair name"
-  value       = component.key_pair.key_name
+output "networks_output" {
+  description = "VPC and networks with key_pair for dev environment"
+  type        = object({
+    vpc_id = string
+    private_subnet_ids = list(string)
+    security_group_ids = list(string)
+    key_name = string
+  })
+  value       = [
+    {
+      vpc_id = component.vpc.vpc_id
+      private_subnet_ids = component.vpc.private_subnet_ids
+      security_group_ids = [component.vpc.security_group_id_ssh]
+      key_name = component.key_pair.key_name
+    }
+  ]
 }
