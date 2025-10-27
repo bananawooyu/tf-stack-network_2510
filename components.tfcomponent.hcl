@@ -49,12 +49,10 @@ output "networks_output" {
     security_group_ids = list(string)
     key_name = string
   })
-  value       = [
-    {
+  value       = {
       vpc_id = component.vpc.vpc_id
       private_subnet_ids = component.vpc.private_subnet_ids
       security_group_ids = [component.vpc.security_group_id_ssh]
       key_name = component.key_pair.key_name
-    }
-  ]
+  }
 }
