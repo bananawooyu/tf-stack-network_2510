@@ -25,11 +25,19 @@ component "key_pair" {
 removed {
   source = "./vpc"
   from   = component.vpc["ap-northeast-1"]
+  
+  providers = {
+    aws = provider.aws.this
+  }
 }
 
 removed {
   source = "./key_pair"
   from   = component.key_pair["ap-northeast-1"]
+  
+  providers = {
+    aws = provider.aws.this
+  }
 }
 
 
