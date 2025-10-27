@@ -1,10 +1,7 @@
 # Copyright (c) HashiCorp, Inc.
 # SPDX-License-Identifier: MPL-2.0
 
-variable "regions" {
-  description = "AWS regions to deploy to."
-  type        = set(string)
-}
+# Single region deployment - ap-northeast-1 is hardcoded in providers
 
 # variable "identity_token" {
 #   description = "Identity token for authentication."

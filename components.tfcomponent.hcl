@@ -2,47 +2,46 @@
 # SPDX-License-Identifier: MPL-2.0
 
 component "vpc" {
-  source   = "./vpc"
-  for_each = var.regions
+  source = "./vpc"
 
   inputs = {
-    vpc_name = "stacks-${each.value}-${var.default_tags.Environment}"
+    vpc_name = "stacks-ap-northeast-1-${var.default_tags.Environment}"
   }
 
   providers = {
-    aws = provider.aws.this[each.value]
+    aws = provider.aws.this
   }
 }
 
 component "key_pair" {
-  source   = "./key_pair"
+  source = "./key_pair"
 
   providers = {
-    aws = provider.aws.this[each.value]
+    aws = provider.aws.this
   }
 }
 
 
-output "vpc_ids" {
-  type        = map(string)
-  description = "VPC IDs by region"
-  value       = { for region, vpc in component.vpc : region => vpc.vpc_id }
+output "vpc_id" {
+  type        = string
+  description = "VPC ID"
+  value       = component.vpc.vpc_id
 }
 
 output "private_subnet_ids" {
-  type        = map(list(string))
-  description = "Private subnet IDs by region"
-  value       = { for region, vpc in component.vpc : region => vpc.private_subnet_ids }
+  type        = list(string)
+  description = "Private subnet IDs"
+  value       = component.vpc.private_subnet_ids
 }
 
 output "security_group_ids" {
-  type        = map(list(string))
-  description = "Security group IDs by region"
-  value       = { for region, vpc in component.vpc : region => [vpc.security_group_id_ssh] }
+  type        = list(string)
+  description = "Security group IDs"
+  value       = [component.vpc.security_group_id_ssh]
 }
 
-output "key_names" {
-  type        = map(string)
-  description = "Key pair names by region"
+output "key_name" {
+  type        = string
+  description = "Key pair name"
   value       = component.key_pair.key_name
 }
