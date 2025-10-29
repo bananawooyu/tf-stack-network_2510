@@ -43,16 +43,16 @@ component "key_pair" {
 
 output "networks_output" {
   description = "VPC and networks with key_pair for dev environment"
-  type        = object({
-    vpc_id = string
+  type = object({
+    vpc_id             = string
     private_subnet_ids = list(string)
-    security_group_ids = list(string)
-    key_name = string
+    security_group_ids = string
+    key_name           = string
   })
-  value       = {
-      vpc_id = component.vpc.vpc_id
+  value = {
+      vpc_id             = component.vpc.vpc_id
       private_subnet_ids = component.vpc.private_subnet_ids
-      security_group_ids = [component.vpc.security_group_id_ssh]
-      key_name = component.key_pair.key_name
+      security_group_ids = component.vpc.security_group_id_ssh
+      key_name           = component.key_pair.key_name
   }
 }
