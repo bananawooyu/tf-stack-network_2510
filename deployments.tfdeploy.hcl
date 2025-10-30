@@ -21,6 +21,8 @@ deployment "development" {
       Environment = "dev"
     }
   }
+
+  destroy = true
 }
 
 publish_output "networks_output" {
